@@ -3,6 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import ReactTable from 'react-table-6';
 import {SERVER_URL} from '../constants.js';
 import AddCar from './AddCar';
+import EditCar from './EditCar';
 import 'react-table-6/react-table.css';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -52,6 +53,26 @@ class Carlist extends Component {
         .then(res => this.fetchCars())
         .catch(err => console.error(err))
     }
+    updateCar(car, link) {
+        fetch(link,
+            { method: 'PUT',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(car)
+            })
+        .then(res => {
+            toast.success("Changes saved", {
+                position: toast.POSITION.BOTTOM_LEFT
+            });
+        this.fetchCars();
+        })
+        .catch(err =>
+            toast.error("Error when saving", {
+                position: toast.POSITION.BOTTOM_LEFT
+            })
+        )
+    }
     render() {
         const columns = [{
             Header: 'Brand',
@@ -68,6 +89,14 @@ class Carlist extends Component {
         }, {
             Header: 'Price',
             accessor: 'price'
+        }, {
+            sortable: false,
+            filterable: false,
+            width: 100,
+            accessor: '_links.self.href',
+            Cell: ({value, row}) => (<EditCar car={row} link={value}
+                updateCar={this.updateCar} fetchCars={this.fetchCars} />),
+            with: 100
         }, {
             id: 'delbutton',
             sortable: false,
