@@ -7,6 +7,7 @@ import AddCar from './AddCar';
 import EditCar from './EditCar';
 import 'react-table-6/react-table.css';
 import 'react-toastify/dist/ReactToastify.css';
+import Button from '@material-ui/core/Button';
 
 class Carlist extends Component {
     constructor(props) {
@@ -104,7 +105,7 @@ class Carlist extends Component {
             filterable: false,
             width: 100,
             accessor: '_links.self.href',
-            Cell: ({value}) => (<button onClick={()=>{this.onDelClick(value)}}>Delete</button>)
+            Cell: ({value}) => (<Button size="small" color="secondary" onClick={()=>{this.onDelClick(value)}}>Delete</Button>)
         }]
         return (
             <div className="App">
