@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import ReactTable from 'react-table-6';
 import {SERVER_URL} from '../constants.js';
+import AddCar from './AddCar';
 import 'react-table-6/react-table.css';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -40,6 +41,17 @@ class Carlist extends Component {
                 })
             }
     }
+    addCar(car) {
+        fetch(SERVER_URL + 'api/cars',
+            { method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(car)
+        })
+        .then(res => this.fetchCars())
+        .catch(err => console.error(err))
+    }
     render() {
         const columns = [{
             Header: 'Brand',
@@ -66,6 +78,7 @@ class Carlist extends Component {
         }]
         return (
             <div className="App">
+                <AddCar addCar={this.addCar} fetchCars={this.fetchCars} />
                 <ReactTable data={this.state.cars} columns={columns}
                     filterable={true}/>
                 <ToastContainer autoClose={1500} />
