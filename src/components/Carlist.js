@@ -8,6 +8,7 @@ import EditCar from './EditCar';
 import 'react-table-6/react-table.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Button from '@material-ui/core/Button';
+import Grid from '@material-ui/core/Grid';
 
 class Carlist extends Component {
     constructor(props) {
@@ -109,8 +110,14 @@ class Carlist extends Component {
         }]
         return (
             <div className="App">
-                <AddCar addCar={this.addCar} fetchCars={this.fetchCars} />
-                <CSVLink data={this.state.cars} separator=";">Export CSV</CSVLink>
+                <Grid container>
+                    <Grid item>
+                        <AddCar addCar={this.addCar} fetchCars={this.fetchCars} />            
+                    </Grid>
+                    <Grid item style={{padding: 15}}>
+                        <CSVLink data={this.state.cars} separator=";">Export CSV</CSVLink>
+                    </Grid>
+                </Grid>
                 <ReactTable data={this.state.cars} columns={columns}
                     filterable={true}/>
                 <ToastContainer autoClose={1500} />
