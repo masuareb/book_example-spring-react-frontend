@@ -21,6 +21,11 @@ class Carlist extends Component {
             })
             .catch(err => console.error(err));
     }
+    onDelClick = (link) => {
+        fetch(link, {method: 'DELETE'})
+            .then(res => this.fetchCars())
+            .catch(err => console.error(err))
+    }
     render() {
         const columns = [{
             Header: 'Brand',
