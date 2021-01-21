@@ -9,6 +9,9 @@ class Carlist extends Component {
         this.state = { cars: [] };
     }
     componentDidMount() {
+        this.fetchCars();
+    }
+    fetchCars = () => {
         fetch(SERVER_URL + 'api/cars')
             .then((response) => response.json())
             .then((responseData) => {
