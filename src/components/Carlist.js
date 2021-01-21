@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import ReactTable from 'react-table-6';
 import {SERVER_URL} from '../constants.js';
 import 'react-table-6/react-table.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 class Carlist extends Component {
     constructor(props) {
@@ -22,9 +24,21 @@ class Carlist extends Component {
             .catch(err => console.error(err));
     }
     onDelClick = (link) => {
-        fetch(link, {method: 'DELETE'})
-            .then(res => this.fetchCars())
-            .catch(err => console.error(err))
+        if (window.confirm('Are you sure to delete?')) {
+            fetch(link, {method: 'DELETE'})
+                .then(res => {
+                    toast.success("Car deleted", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    });
+                    this.fetchCars()
+                })
+                .catch(err => {
+                    toast.error("Error when deleting", {
+                        position: toast.POSITION.BOTTOM_LEFT
+                    });
+                    console.error(err)
+                })
+            }
     }
     render() {
         const columns = [{
@@ -54,6 +68,7 @@ class Carlist extends Component {
             <div className="App">
                 <ReactTable data={this.state.cars} columns={columns}
                     filterable={true}/>
+                <ToastContainer autoClose={1500} />
             </div>
         );
     }
