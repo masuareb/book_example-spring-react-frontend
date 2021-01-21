@@ -16,8 +16,21 @@ class Carlist extends Component {
             .catch(err => console.error(err));
     }
     render() {
+        const tableRows = this.state.cars.map((car, index) =>
+            <tr key={index}>
+                <td>{car.brand}</td>
+                <td>{car.model}</td>
+                <td>{car.color}</td>
+                <td>{car.year}</td>
+                <td>{car.price}</td>
+            </tr>
+        );
         return (
-            <div></div>
+            <div className="App">
+                <table>
+                    <tbody>{tableRows}</tbody>
+                </table>
+            </div>
         );
     }
 }
