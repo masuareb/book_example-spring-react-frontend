@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {SERVER_URL} from "../constants";
 import TextField from "@material-ui/core/TextField";
 import Button from '@material-ui/core/Button';
+import Carlist from './Carlist';
 
 const Login = () => {
     const [user, setUser] = useState({username: '', password: ''});
@@ -23,14 +24,19 @@ const Login = () => {
             })
             .catch(err => console.error(err))
     }
-    return (
-        <div>
-            <TextField name="username" label="Username" onChange={handleChange} /><br/>
-            <TextField type="password" name="password" label="Password" onChange={handleChange} /><br/>
-            <Button variant="outlined" color="primary" onClick={login}>
-                Login
-            </Button>
-        </div>
-    )
+    if (isAuthenticated === true) {
+        return (<Carlist />)
+    }
+    else {
+        return (
+            <div>
+                <TextField name="username" label="Username" onChange={handleChange}/><br/>
+                <TextField type="password" name="password" label="Password" onChange={handleChange}/><br/>
+                <Button variant="outlined" color="primary" onClick={login}>
+                    Login
+                </Button>
+            </div>
+        );
+    }
 }
 export default Login;
